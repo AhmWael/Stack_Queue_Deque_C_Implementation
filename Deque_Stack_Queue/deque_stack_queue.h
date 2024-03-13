@@ -3,10 +3,11 @@
 
 typedef int TYPE;
 
-typedef struct
+typedef struct node
 {
     TYPE data;
     struct node *next;
+    struct node *prev;
 } node;
 
 typedef struct
@@ -42,7 +43,7 @@ void push_stack(stack *s, TYPE data);
 TYPE pop_stack(stack *s);
 TYPE peek_stack(stack *s);
 int isEmptyStack(stack *s);
-void print_Stack(stack *s);
+void displayStack(stack *s);
 
 // Queue functions
 queue *new_queue();
@@ -50,5 +51,6 @@ queue *new_queue();
 void enqueue(queue *q, TYPE data);
 TYPE dequeue(queue *q);
 int isEmptyQueue(queue *q);
+void displayQueue(queue *q);
 
 #endif /* DEQUE_STACK_QUEUE_H */

@@ -11,7 +11,7 @@ node *new_node(TYPE data)
         exit(EXIT_FAILURE);
     }
     n->data = data;
-    n->next = NULL;
+    n->next = n->prev = NULL;
     return n;
 }
 
@@ -40,6 +40,7 @@ void insHead(deque *d, TYPE data)
     else
     {
         n->next = d->head;
+        d->head->prev = n;
         d->head = n;
     }
 }
@@ -54,9 +55,9 @@ void remHead(deque *d)
         }
         else
         {
-            node *temp = d->head;
             d->head = d->head->next;
-            distNode(temp);
+            distNode(d->head->prev);
+            d->head->prev = NULL;
         }
     }
 }
@@ -69,6 +70,7 @@ void insTail(deque *d, TYPE data)
     else
     {
         d->tail->next = n;
+        n->prev = d->tail;
         d->tail = n;
     }
 }
@@ -83,14 +85,9 @@ void remTail(deque *d)
         }
         else
         {
-            node *temp = d->head;
-            while (temp->next != d->tail)
-            {
-                temp = temp->next;
-            }
-            temp->next = NULL;
-            distNode(d->tail);
-            d->tail = temp;
+            d->tail = d->tail->prev;
+            distNode(d->tail->next);
+            d->tail->next = NULL;
         }
     }
 }
@@ -144,6 +141,17 @@ int isEmptyStack(stack *s)
 {
     return s->deque->head == NULL ? 1 : 0;
 }
+
+void displayStack(stack *s)
+{
+    node *temp = s->deque->head;
+    while (temp->next != NULL)
+    {
+        printf("%d\n", temp->data);
+        temp = temp->next;
+    }
+    printf("%d\n", temp->data);
+}
 /*********************************************/
 /************** Queue Functions **************/
 queue *new_queue()
@@ -178,5 +186,16 @@ TYPE dequeue(queue *q)
 int isEmptyQueue(queue *q)
 {
     return q->deque->head == NULL ? 1 : 0;
+}
+
+void displayQueue(queue *q)
+{
+    node *temp = q->deque->head;
+    while (temp->next != NULL)
+    {
+        printf("%d\n", temp->data);
+        temp = temp->next;
+    }
+    printf("%d\n", temp->data);
 }
 /*********************************************/
