@@ -15,6 +15,8 @@ void enqueue(queue *q, int item);
 TYPE dequeue(queue *q);
 int isFullQueue(queue *q);
 int isEmptyQueue(queue *q);
+void displayQueue(queue *q);
+
 int count_Even_Queue(queue *q);
 
 queue *new_queue(int capacity){
@@ -57,6 +59,17 @@ int isFullQueue(queue *q){
 
 int isEmptyQueue(queue *q){
     return q->size == 0 ? 1 : 0;
+}
+
+void displayQueue(queue *q)
+{
+    int q_size = q->size;
+    for (int i = 0; i < q_size; i++)
+    {
+        TYPE data = dequeue(q);
+        printf("%d\n", data);
+        enqueue(q, data);
+    }
 }
 
 int count_Even_Queue(queue *q){
